@@ -5,51 +5,59 @@ document.addEventListener('DOMContentLoaded', function() {
     const message = document.getElementById('message')
     const messages = document.getElementById('messages')
 
+    //Отправляем при загрузке страницы GET-запрос для получения уже имеющихся сообщений
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:3000');
+    xhr.send();
+
+    xhr.onload = function() {
+        if (xhr.status != 200) {
+            messages.innerText = `Ошибка ${xhr.status}: ${xhr.statusText}`;
+        } else {
+            const serverResult = JSON.parse(xhr.response);
+            serverResult.forEach((result) => {
+                createMessageBox(result, messages);
+            })
+        }
+    };
+
+    //Отправляем сообщение в чат с помощью POST-запроса
     button.addEventListener('click', function() {
         if (user.value && message.value)
         {
-            let xhr = new XMLHttpRequest();
-
             xhr.open('POST', 'http://localhost:3000');
-
             xhr.send(JSON.stringify({nick: user.value, message: message.value}));
 
             xhr.onload = function() {
-                if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
-                    messages.innerText = `Ошибка ${xhr.status}: ${xhr.statusText}`; // Например, 404: Not Found
-                } else { // если всё прошло гладко, выводим результат
-
-                    const serverResult = JSON.parse(xhr.response);
-
-                    let messagebox = document.createElement("div")
-                    messagebox.classList.add("border-bottom")
-                    let messageNickLabel = document.createElement("p")
-                    messageNickLabel.classList.add("text-secondary")
-                    let messageMessageContent = document.createElement("p")
-
-                    messageNickLabel.innerText = serverResult.nick
-                    messageMessageContent.innerText = serverResult.message
-
-                    messagebox.appendChild(messageNickLabel)
-                    messagebox.appendChild(messageMessageContent)
-                    messages.insertAdjacentElement("afterbegin", messagebox)
-                }
-            };
-
-            xhr.onprogress = function(event) {
-                if (event.lengthComputable) {
-                    console.log(`Получено ${event.loaded} из ${event.total} байт`);
+                if (xhr.status != 200) {
+                    messages.innerText = `Ошибка ${xhr.status}: ${xhr.statusText}`;
                 } else {
-                    console.log(`Получено ${event.loaded} байт`); // если в ответе нет заголовка Content-Length
+                    const serverResult = JSON.parse(xhr.response);
+                    createMessageBox(serverResult, messages);
                 }
-
             };
 
             xhr.onerror = function() {
-                results.innerText = "Запрос не удался";
+                console.log("Запрос не удался");
             };
         }
     });
-
 });
+
+//Функция для создания блока с сообщением
+function createMessageBox(messageInfo, messageContainer)
+{
+    let messagebox = document.createElement("div")
+    messagebox.classList.add("border-bottom")
+    let messageNickLabel = document.createElement("p")
+    messageNickLabel.classList.add("text-secondary")
+    let messageMessageContent = document.createElement("p")
+
+    messageNickLabel.innerText = messageInfo.nick
+    messageMessageContent.innerText = messageInfo.message
+
+    messagebox.appendChild(messageNickLabel)
+    messagebox.appendChild(messageMessageContent)
+    messageContainer.insertAdjacentElement("afterbegin", messagebox)
+}
 

@@ -9,7 +9,6 @@ const server = http.createServer(function(request, response) {
     if (request.method === "POST") {
         console.log("POST");
         request.on("data", function(data) {
-            console.log(data.toString());
             messages.push(JSON.parse(data.toString()));
         });
         request.on("end", function() {
@@ -19,7 +18,6 @@ const server = http.createServer(function(request, response) {
         })
     } else {
         console.log("GET");
-        console.log(request);
         response.writeHead(200, defaultHeaders);
         response.end(JSON.stringify(messages))
     }
