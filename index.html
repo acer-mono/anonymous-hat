@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+    <h1 class="text-secondary">907св_Чат</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8">
+                <form onsubmit="return false;">
+                    <label for="nick">Имя</label>
+                    <input id="nick" name="nick" class="form-control mb-4" type="text" required >
+                    <label for="message">Сообщение</label>
+                    <textarea class="form-control mb-4" id="message" name="message" rows="3" required></textarea>
+                    <input type="submit" class="btn btn-secondary bg-success" id="send" value="Отправить"/>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div id="messages"></div>
+    </div>
+</body>
+</html>
