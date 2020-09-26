@@ -1,0 +1,19 @@
+#messages{
+    overflow: auto;
+    height: 85vh;
+    background: white;
+    opacity: .9;
+    border-radius: .5rem;
+    padding: 1rem 2rem;
+}
+body {
+    max-width: 1800px;
+    background: url("../images/pattern.jpg");
+}
+
+.enter-form {
+    background: white;
+    opacity: .9;
+    padding: 1rem;
+    border-radius: .5rem;
+}

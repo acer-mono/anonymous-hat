@@ -31,7 +31,6 @@ class App {
             if (xhr.status !== 200) {
                 this.messages.innerText = `Ошибка ${xhr.status}: ${xhr.statusText}`;
             } else {
-                const serverResult = JSON.parse(xhr.response);
                 this.user.value = "";
                 this.message.value = "";
             }

@@ -3,28 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="main.css"/>
-    <script type="text/javascript" src="main.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
-    <h1 class="text-secondary">907св_Чат</h1>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
-                <form onsubmit="return false;">
-                    <label for="nick">Имя</label>
-                    <input id="nick" name="nick" class="form-control mb-4" type="text" required >
-                    <label for="message">Сообщение</label>
-                    <textarea class="form-control mb-4" id="message" name="message" rows="3" required></textarea>
-                    <input type="submit" class="btn btn-secondary bg-success" id="send" value="Отправить"/>
+            <div class="col-4">
+                <img src="images/chat.svg" height="90" alt="">
+            </div>
+            <div class="col-8"></div>
+        </div>
+        <div class="row" >
+            <div class="col-4">
+                <form class="enter-form" onsubmit="return false;">
+                    <input id="nick"
+                           name="nick"
+                           class="form-control mb-4"
+                           type="text"
+                           placeholder="Your name..."
+                           required >
+                    <textarea class="form-control mb-4"
+                              id="message"
+                              name="message"
+                              rows="3"
+                              placeholder="Your message..."
+                              required></textarea>
+                    <input type="submit" class="btn btn-primary btn-block" id="send" value="Отправить"/>
                 </form>
             </div>
+            <div class="col-8" id="messages"></div>
         </div>
-        <hr>
-        <div id="messages"></div>
     </div>
 </body>
 </html>
