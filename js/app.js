@@ -1,5 +1,30 @@
 const URL = 'http://localhost:3000'
 
+/**
+ * @param {string} method
+ * @param {object} data
+ * @returns {Promise<object>}
+ */
+function http(method, data = null) {
+    return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open(method, URL);
+        xhr.send(data ? JSON.stringify(data) : null);
+
+        xhr.onload = () => {
+            if (xhr.status !== 200) {
+                reject(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+            } else {
+                resolve(JSON.parse(xhr.response));
+            }
+        };
+
+        xhr.onerror = function() {
+            reject("Запрос не удался");
+        };
+    });
+}
+
 class App {
     constructor() {
         this.button = document.getElementById('send');
@@ -26,22 +51,14 @@ class App {
             return;
         }
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', URL);
-        xhr.send(JSON.stringify({nick: this.user.value, message: this.message.value}));
-
-        xhr.onload = () => {
-            if (xhr.status !== 200) {
-                this.messages.innerText = `Ошибка ${xhr.status}: ${xhr.statusText}`;
-            } else {
+        http('POST', {nick: this.user.value, message: this.message.value})
+            .then(() => {
                 this.user.value = "";
                 this.message.value = "";
-            }
-        };
-
-        xhr.onerror = function() {
-            console.error("Запрос не удался");
-        };
+            })
+            .catch(error => {
+                this.messages.innerText = `Ошибка ${xhr.status}: ${xhr.statusText}`;
+            });
     }
 
     postMessagePromise() {
@@ -86,18 +103,7 @@ class App {
     }
 
     getMessages() {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', URL);
-        xhr.send();
-
-        xhr.onload = () => {
-            if (xhr.status !== 200) {
-                console.error(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-            } else {
-                const serverResult = JSON.parse(xhr.response);
-                this.drawMessages(serverResult);
-            }
-        };
+        http('GET').then(result => this.drawMessages(result));
     }
 
     getMessagesPromise() {
