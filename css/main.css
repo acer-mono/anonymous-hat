@@ -1,19 +1,54 @@
-#messages{
+body {
+    background: url("../images/pattern.jpg");
+}
+
+.header {
+    margin: auto;
+    max-width: 1800px;
+}
+
+.messages{
     overflow: auto;
     height: 85vh;
     background: white;
     opacity: .9;
     border-radius: .5rem;
     padding: 1rem 2rem;
-}
-body {
-    max-width: 1800px;
-    background: url("../images/pattern.jpg");
+    width: 68%;
 }
 
-.enter-form {
+.form-fields {
     background: white;
     opacity: .9;
     padding: 1rem;
     border-radius: .5rem;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1800px;
+    margin: auto;
+}
+
+.form {
+    width: 30%;
+}
+
+@media (max-width: 900px) {
+    .main{
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+    .form {
+        width: auto;
+        margin-bottom: 1rem;
+    }
+    .messages {
+        width: auto;
+        height: 60vh;
+    }
+    .logo {
+        text-align: center;
+    }
 }

@@ -11,15 +11,14 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-4">
+        <div class="header">
+            <div class="col-12 logo">
                 <img src="images/chat.svg" height="90" alt="">
             </div>
-            <div class="col-8"></div>
         </div>
-        <div class="row" >
-            <div class="col-4">
-                <form class="enter-form" onsubmit="return false;">
+        <div class="main">
+            <div class="form">
+                <form class="form-fields" onsubmit="return false;">
                     <input id="nick"
                            name="nick"
                            class="form-control mb-4"
@@ -35,7 +34,7 @@
                     <input type="submit" class="btn btn-primary btn-block" id="send" value="Отправить"/>
                 </form>
             </div>
-            <div class="col-8" id="messages"></div>
+            <div class="messages" id="messages"></div>
         </div>
     </div>
 </body>

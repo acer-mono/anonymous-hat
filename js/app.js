@@ -63,10 +63,13 @@ class App {
             if (!existingIds.includes(message.id))
             {
                 let messagebox = document.createElement("div")
-                messagebox.classList.add("border-bottom")
-                let messageNickLabel = document.createElement("p")
-                messageNickLabel.classList.add("text-secondary")
-                let messageMessageContent = document.createElement("p")
+                messagebox.classList.add("card");
+                messagebox.classList.add("mb-3");
+                let messageNickLabel = document.createElement("div")
+                messageNickLabel.classList.add("card-header");
+                messageNickLabel.classList.add("font-weight-bold");
+                let messageMessageContent = document.createElement("div")
+                messageMessageContent.classList.add("card-body");
                 messageNickLabel.innerText = message.nick
                 messageMessageContent.innerText = message.message
                 messagebox.appendChild(messageNickLabel)
