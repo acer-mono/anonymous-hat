@@ -35,6 +35,14 @@ body {
     width: 30%;
 }
 
+.error-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgba(255, 255, 255, .7);
+}
+
 @media (max-width: 900px) {
     .main{
         justify-content: flex-start;
