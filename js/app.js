@@ -33,19 +33,17 @@ class App {
         this.messages = document.getElementById('messages');
         this.serverMessages = [];
 
-        this.postMessage = this.postMessage.bind(this);
         this.postMessagePromise = this.postMessagePromise.bind(this);
         this.postMessageAsync = this.postMessageAsync.bind(this);
-        this.getMessages = this.getMessages.bind(this);
         this.getMessagesPromise = this.getMessagesPromise.bind(this);
         this.getMessagesAsync = this.getMessagesAsync.bind(this);
         this.drawMessages = this.drawMessages.bind(this);
 
-        setInterval(this.getMessagesAsync, 1000);
+        setInterval(this.getMessagesAsync , 1000);
         this.button.addEventListener('click', this.postMessageAsync);
     }
 
-    postMessage() {
+    postMessagePromise() {
         if (!this.user.value || !this.message.value) {
             console.error("Невозможно отправить сообщение! Пустые обязательные поля!");
             return;
@@ -61,80 +59,35 @@ class App {
             });
     }
 
-    postMessagePromise() {
-        return new Promise((resolve, reject) => {
-            if (!this.user.value || !this.message.value) {
-                reject("Невозможно отправить сообщение! Пустые обязательные поля!");
-                return;
-            }
-
-            let xhr = new XMLHttpRequest();
-            xhr.open('POST', URL);
-            xhr.send(JSON.stringify({nick: this.user.value, message: this.message.value}));
-
-            xhr.onload = () => {
-                if (xhr.status !== 200) {
-                    reject(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-                } else {
-                    resolve();
-                }
-            };
-
-            xhr.onerror = function() {
-                reject("Запрос не удался");
-            };
-        })
-            .then(resolve => {
-                this.user.value = "";
-                this.message.value = "";
-            })
-            .catch(error => {
-                console.error(error);
-            })
-    }
-
     async postMessageAsync() {
-        try {
-            let result = await this.postMessage()
+        if (!this.user.value || !this.message.value) {
+            console.error("Невозможно отправить сообщение! Пустые обязательные поля!");
+            return;
         }
-        catch (error) {
-            console.error(error);
-        }
-    }
 
-    getMessages() {
-        http('GET').then(result => this.drawMessages(result));
+        try {
+            let result = await http('POST', {nick: this.user.value, message: this.message.value});
+            this.user.value = "";
+            this.message.value = "";
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 
     getMessagesPromise() {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', URL);
-            xhr.send();
-
-            xhr.onload = () => {
-                if (xhr.status !== 200) {
-                    reject(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-                } else {
-                    resolve(JSON.parse(xhr.response));
-                }
-            };
-        })
-            .then(response => {
-                this.drawMessages(response);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        http('GET').then(result => this.drawMessages(result)).catch(error => console.log(error));
     }
 
     async getMessagesAsync() {
         try {
-            let result = await this.getMessagesPromise();
+            let result = await http('GET');
+            this.drawMessages(result);
         }
-        catch (error) {
-            console.log(error);
+        catch (err) {
+            console.error(err);
         }
+
     }
 
     drawMessages(response) {
