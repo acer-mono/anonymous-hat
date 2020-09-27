@@ -1,3 +1,4 @@
+// TODO change host after pull (move to config)
 const URL = 'http://192.168.0.41:3000/messages'
 
 /**
