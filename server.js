@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const Router = require("./Router");
 
-const port = 3000;
+const port = 80;
 const host = "0.0.0.0";
 const messages = [];
 const jsonHeaders = {
