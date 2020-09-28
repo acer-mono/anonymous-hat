@@ -1,5 +1,5 @@
 // TODO change host after pull (move to config)
-const URL = 'http://acer-mono-chat.herokuapp.com/messages'
+const URL = 'http://localhost:3000/messages'
 
 /**
  * @param {string} method
