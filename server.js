@@ -3,7 +3,7 @@ const fs = require("fs");
 const Router = require("./Router");
 
 const port = 3000;
-const host = "http://acer-mono-chat.herokuapp.com";
+const host = "0.0.0.0";
 const messages = [];
 const jsonHeaders = {
     "Content-Type": "application/json",
