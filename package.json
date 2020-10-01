@@ -1,11 +1,15 @@
 {
   "name": "chat",
   "version": "1.0.0",
-  "description": "",
   "main": "Router.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server.js"
+  },
+  "jest": {
+    "setupFiles": [
+      "./setupTests.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -16,5 +20,18 @@
   "bugs": {
     "url": "https://github.com/acer-mono/anonymous_Chat/issues"
   },
-  "homepage": "https://github.com/acer-mono/anonymous_Chat#readme"
+  "homepage": "https://github.com/acer-mono/anonymous_Chat#readme",
+  "description": "",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "babel-jest": "^26.3.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "jest": "^26.4.2"
+  }
 }

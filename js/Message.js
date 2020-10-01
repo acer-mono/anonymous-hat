@@ -1,3 +1,5 @@
+import React from 'react';
+
 class Message extends React.Component {
     render() {
         const { user, message } = this.props;
@@ -13,3 +15,5 @@ class Message extends React.Component {
         </>;
     }
 }
+
+export default Message;

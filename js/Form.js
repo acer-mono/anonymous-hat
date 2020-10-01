@@ -1,3 +1,6 @@
+import React from 'react';
+import Message from "./Message";
+
 class Form extends React.Component {
     constructor() {
         super();
@@ -54,3 +57,5 @@ class Form extends React.Component {
             </>
     }
 }
+
+export default Form;
