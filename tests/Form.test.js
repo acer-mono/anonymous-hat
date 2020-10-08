@@ -22,4 +22,38 @@ describe('Form', () => {
             message
         });
     });
+
+    test('runs callback with empty user field', () => {
+        const message = 'Message';
+        const user = '';
+        const handler = jest.fn();
+        const component = shallow(<Form postMessage={handler}/>);
+        component
+            .find('input[type="text"]')
+            .simulate('change', {target: {value: user}});
+        component
+            .find('textarea')
+            .simulate('change', {target: {value: message}});
+        component
+            .find('input[type="submit"]')
+            .simulate('click');
+        expect(handler).not.toHaveBeenCalled();
+    });
+
+    test('runs callback with empty message field', () => {
+        const message = '';
+        const user = 'user';
+        const handler = jest.fn();
+        const component = shallow(<Form postMessage={handler}/>);
+        component
+            .find('input[type="text"]')
+            .simulate('change', {target: {value: user}});
+        component
+            .find('textarea')
+            .simulate('change', {target: {value: message}});
+        component
+            .find('input[type="submit"]')
+            .simulate('click');
+        expect(handler).not.toHaveBeenCalled();
+    });
 });

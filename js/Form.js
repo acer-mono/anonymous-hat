@@ -12,7 +12,6 @@ class Form extends React.Component {
 
     handleSend() {
         if (!this.state.user || !this.state.message) {
-            console.error("Невозможно отправить сообщение! Пустые обязательные поля!");
             return;
         }
 
