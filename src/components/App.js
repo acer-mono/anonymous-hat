@@ -2,7 +2,7 @@
 import React from 'react';
 import Form from "./Form";
 import MessagesList from "./MessagesList";
-const URL = 'http://192.168.200.134:3000/messages';
+const URL = 'http://localhost:3000/messages';
 
 /**
  * @param {string} method
@@ -36,7 +36,7 @@ class App extends React.Component {
             serverMessages: []
         };
 
-        //setInterval(this.getMessagesAsync.bind(this), 1000);
+        setInterval(this.getMessagesAsync.bind(this), 1000);
     }
 
     postMessagePromise() {

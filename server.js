@@ -72,7 +72,7 @@ const server = http.createServer((request, response) => {
         if (!contentType)
             throw "Unknown Content-Type";
 
-        fs.readFile(`${__dirname}${request.url}`, function(err, data){
+        fs.readFile(`${__dirname}/public/${request.url}`, function(err, data){
             if (err) throw err;
             response.writeHead(200, {
                 "Content-Type": contentType
