@@ -1,5 +1,7 @@
 // TODO change host after pull (move to configs)
 import React from 'react';
+import Form from "./Form";
+import MessagesList from "./MessagesList";
 const URL = 'http://192.168.200.134:3000/messages';
 
 /**
@@ -34,7 +36,7 @@ class App extends React.Component {
             serverMessages: []
         };
 
-        setInterval(this.getMessagesAsync.bind(this), 1000);
+        //setInterval(this.getMessagesAsync.bind(this), 1000);
     }
 
     postMessagePromise() {
@@ -83,7 +85,7 @@ class App extends React.Component {
         return <>
             <div className="header">
                 <div className="col-12 logo">
-                    <img src="images/chat.svg" height="90" alt="" />
+                    <img src="../../public/images/chat.svg" height="90" alt="" />
                 </div>
             </div>
             <div className="main">
