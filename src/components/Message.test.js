@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Message from '../js/Message';
+import Message from './Message';
 
 describe('Message', () => {
     test('Message shows nick and message', () => {

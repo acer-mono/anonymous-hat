@@ -1,5 +1,5 @@
 import {shallow} from "enzyme/build";
-import Form from "../js/Form";
+import Form from "./Form";
 import React from "react";
 
 describe('Form', () => {

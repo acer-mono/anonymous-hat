@@ -1,5 +1,5 @@
 import {shallow} from "enzyme/build";
-import MessagesList from "../js/MessagesList";
+import MessagesList from "./MessagesList";
 import React from "react";
 
 describe('MessagesList', () => {

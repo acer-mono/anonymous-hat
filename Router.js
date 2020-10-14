@@ -3,7 +3,7 @@ class Router {
         this.routes = [];
         this.regex = [
             {regex: /(.*)\.js/, contentType: "application/javascript"},
-            {regex: /(.*)\.css/, contentType: "text/css"},
+            {regex: /(.*)\.css/, contentType: "text/styles"},
             {regex: /(.*)\.svg/, contentType: "image/svg+xml"},
             {regex: /(.*)\.jpg/, contentType: "image/jpeg"}
         ];

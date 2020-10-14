@@ -1,4 +1,5 @@
-// TODO change host after pull (move to config)
+// TODO change host after pull (move to configs)
+import React from 'react';
 const URL = 'http://192.168.200.134:3000/messages';
 
 /**
@@ -96,3 +97,5 @@ class App extends React.Component {
         </>
     }
 }
+
+export default App;
