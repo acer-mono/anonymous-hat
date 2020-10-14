@@ -85,7 +85,7 @@ class App extends React.Component {
         return <>
             <div className="header">
                 <div className="col-12 logo">
-                    <img src="../../public/images/chat.svg" height="90" alt="" />
+                    <img src="images/chat.svg" height="90" alt="" />
                 </div>
             </div>
             <div className="main">

@@ -17,12 +17,12 @@ const htmlHeaders = {
 let errorPage;
 let indexPage;
 
-fs.readFile("404.html", function(err, data){
+fs.readFile("./public/404.html", function(err, data){
     if (err) throw err;
     errorPage = data;
 });
 
-fs.readFile("index.html", function(err, data){
+fs.readFile("./public/index.html", function(err, data){
     if (err) throw err;
     indexPage = data;
 });
