@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Message Message test with snapshot 1`] = `
+<div
+  className="card mb-3"
+>
+  <div
+    className="card-header font-weight-bold"
+  >
+    test
+  </div>
+  <div
+    className="card-body"
+  >
+    test
+  </div>
+</div>
+`;
