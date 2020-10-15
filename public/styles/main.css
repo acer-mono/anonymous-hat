@@ -2,61 +2,10 @@ body {
     background: url("../images/pattern.jpg");
 }
 
-.header {
-    margin: auto;
-    max-width: 1800px;
-}
-
-.messages{
-    overflow: auto;
-    height: 85vh;
-    background: white;
-    opacity: .95;
-    border-radius: .5rem;
-    padding: 1rem 2rem;
-    width: 68%;
-}
-
-.form-fields {
-    background: white;
-    opacity: .95;
-    padding: 1rem;
-    border-radius: .5rem;
-}
-
-.main {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1800px;
-    margin: auto;
-}
-
-.form {
-    width: 30%;
-}
-
 .error-content {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background: rgba(255, 255, 255, .7);
-}
-
-@media (max-width: 900px) {
-    .main{
-        justify-content: flex-start;
-        flex-direction: column;
-    }
-    .form {
-        width: auto;
-        margin-bottom: 1rem;
-    }
-    .messages {
-        width: auto;
-        height: 60vh;
-    }
-    .logo {
-        text-align: center;
-    }
 }

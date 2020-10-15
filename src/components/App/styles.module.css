@@ -1,0 +1,43 @@
+@media (max-width: 900px) {
+    .main{
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+    .form {
+        width: auto;
+        margin-bottom: 1rem;
+    }
+    .messages {
+        width: auto;
+        height: 60vh;
+    }
+    .logo {
+        text-align: center;
+    }
+}
+
+.form {
+    width: 30%;
+}
+
+.messages{
+    overflow: auto;
+    height: 85vh;
+    background: white;
+    opacity: .95;
+    border-radius: .5rem;
+    padding: 1rem 2rem;
+    width: 68%;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1800px;
+    margin: auto;
+}
+
+.header {
+    margin: auto;
+    max-width: 1800px;
+}

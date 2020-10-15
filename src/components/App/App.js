@@ -1,7 +1,9 @@
 // TODO change host after pull (move to configs)
 import React from 'react';
-import Form from "./Form";
-import MessagesList from "./MessagesList";
+import chat from './chat.svg'
+import styles from './styles.module.css'
+import Form from "../Form/Form";
+import MessagesList from "../MessageList/MessagesList";
 const URL = 'http://localhost:3000/messages';
 
 /**
@@ -80,19 +82,20 @@ class App extends React.Component {
     }
 
     render() {
+
         const { serverMessages } = this.state;
 
         return <>
-            <div className="header">
-                <div className="col-12 logo">
-                    <img src="images/chat.svg" height="90" alt="" />
+            <div className={styles.header}>
+                <div className={styles.logo}>
+                    <img src={chat} height="90" alt="" />
                 </div>
             </div>
-            <div className="main">
-                <div className="form">
+            <div className={styles.main}>
+                <div className={styles.form}>
                     <Form postMessage={(newMessage) => this.postMessageAsync(newMessage)}/>
                 </div>
-                <div className="messages" id="messages">
+                <div className={styles.messages} id="messages">
                     <MessagesList messages={ serverMessages }/>
                 </div>
             </div>
