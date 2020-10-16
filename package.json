@@ -9,6 +9,11 @@
     "build": "cross-env NODE_ENV=production webpack --config ./configs/webpack.production.js"
   },
   "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      ".+\\.(css|styl|less|sass|scss)$": "jest-transform-css"
+    },
     "setupFiles": [
       "./setupTests.js"
     ]
@@ -26,6 +31,7 @@
   "description": "",
   "dependencies": {
     "bootstrap": "^4.5.3",
+    "jest-transform-css": "^2.1.0",
     "prettier": "^2.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -33,7 +39,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.11.5",
-    "@babel/preset-env": "^7.12.0",
+    "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.10.4",
     "babel-core": "^6.26.3",
     "babel-jest": "^26.5.2",
