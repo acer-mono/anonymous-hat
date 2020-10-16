@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles.modules.js.css';
+import styles from './styles.modules.css';
 
 class Form extends React.Component {
     constructor() {
@@ -31,7 +31,7 @@ class Form extends React.Component {
     render() {
         const { user, message } = this.state;
         return <>
-        <form className={styles.formFields} onSubmit={(e) => e.preventDefault()}>
+        <form className={styles.fields} onSubmit={(e) => e.preventDefault()}>
             <input id="nick"
                    name="nick"
                    value={ user }

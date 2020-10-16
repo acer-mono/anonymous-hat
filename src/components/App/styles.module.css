@@ -1,21 +1,3 @@
-@media (max-width: 900px) {
-    .main{
-        justify-content: flex-start;
-        flex-direction: column;
-    }
-    .form {
-        width: auto;
-        margin-bottom: 1rem;
-    }
-    .messages {
-        width: auto;
-        height: 60vh;
-    }
-    .logo {
-        text-align: center;
-    }
-}
-
 .form {
     width: 30%;
 }
@@ -40,4 +22,22 @@
 .header {
     margin: auto;
     max-width: 1800px;
+}
+
+@media (max-width: 900px) {
+    .main{
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+    .form {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .messages {
+        width: 100%;
+        height: 60vh;
+    }
+    .logo {
+        text-align: center;
+    }
 }
