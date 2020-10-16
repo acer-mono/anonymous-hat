@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessagesList MessageList test with snapshot (empty message list) 1`] = `null`;
+
+exports[`MessagesList MessageList test with snapshot (message list with 3 messages) 1`] = `
+Array [
+  <div
+    className="card mb-3"
+  >
+    <div
+      className="card-header font-weight-bold"
+    >
+      first
+    </div>
+    <div
+      className="card-body"
+    >
+      firstMessage
+    </div>
+  </div>,
+  <div
+    className="card mb-3"
+  >
+    <div
+      className="card-header font-weight-bold"
+    >
+      second
+    </div>
+    <div
+      className="card-body"
+    >
+      secondMessage
+    </div>
+  </div>,
+  <div
+    className="card mb-3"
+  >
+    <div
+      className="card-header font-weight-bold"
+    >
+      second
+    </div>
+    <div
+      className="card-body"
+    >
+      secondMessage
+    </div>
+  </div>,
+]
+`;
