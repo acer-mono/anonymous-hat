@@ -2,7 +2,7 @@
 import React from 'react';
 import chat from './chat.svg'
 import styles from './styles.module.css'
-import Form from "../Form/Form";
+import Form from "../Form";
 import MessagesList from "../MessageList/MessagesList";
 const URL = 'http://localhost:3000/messages';
 
