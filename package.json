@@ -7,11 +7,16 @@
     "test-coverage": "jest --coverage",
     "start": "node server.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./configs/webpack.development.js",
-    "build": "cross-env NODE_ENV=production webpack --config ./configs/webpack.production.js"
+    "build": "cross-env NODE_ENV=production webpack --config ./configs/webpack.production.js",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "prettier": "prettier --write \"src/**/*.js\""
   },
   "jest": {
     "collectCoverage": true,
-    "coverageReporters": ["html"],
+    "coverageReporters": [
+      "html"
+    ],
     "verbose": true,
     "transform": {
       "^.+\\.js$": "babel-jest",
@@ -19,6 +24,16 @@
     },
     "setupFiles": [
       "./setupTests.js"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(js|jsx)": [
+      "eslint --fix"
     ]
   },
   "repository": {
@@ -34,17 +49,19 @@
   "description": "",
   "dependencies": {
     "bootstrap": "^4.5.3",
+    "es6-promise": "^4.2.8",
     "jest-transform-css": "^2.1.0",
-    "prettier": "^2.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.10.4",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
     "babel-jest": "^26.5.2",
     "babel-loader": "^8.1.0",
     "babel-polyfill": "^6.26.0",
@@ -56,9 +73,20 @@
     "css-loader": "^5.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
+    "eslint": "^7.11.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "eslint-plugin-standard": "^4.0.2",
     "file-loader": "^6.1.1",
     "html-webpack-plugin": "^4.5.0",
+    "husky": "^4.3.0",
     "jest": "^26.5.3",
+    "lint-staged": "^10.4.2",
+    "prettier": "^2.1.2",
     "react-test-renderer": "^16.14.0",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.3",
