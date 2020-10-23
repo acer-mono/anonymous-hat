@@ -1,0 +1,16 @@
+.form
+{
+    background: white;
+    opacity: .95;
+    padding: 1rem;
+    border-radius: .5rem;
+    width: 35%;
+}
+
+.main
+{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
