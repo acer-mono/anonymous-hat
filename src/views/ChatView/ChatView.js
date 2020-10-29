@@ -8,7 +8,6 @@ const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const xhr = new XMLHttpRequest();
 const Promise = require('es6-promise').Promise;
 const URL = 'http://localhost:3000/messages';
-
 /**
  * @param {string} method
  * @param {object} data
