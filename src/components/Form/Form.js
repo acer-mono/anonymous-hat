@@ -1,38 +1,65 @@
 import React from 'react';
 import styles from './styles.modules.css';
+import { Formik } from 'formik';
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: '',
+      result: null,
+      error: null,
     };
   }
 
-  handleSend(event) {
-    event.preventDefault();
+  handleSend(values) {
     this.props.postMessage({
-      content: this.state.content,
+      content: values.content,
     });
-    this.setState({ content: '' });
   }
 
   render() {
-    const { content } = this.state;
+    const { error, result } = this.state;
     return (
       <>
-        <form className={styles.fields} onSubmit={e => this.handleSend(e)}>
-          <textarea
-            className="form-control mb-4"
-            value={content}
-            id="message"
-            name="message"
-            rows="3"
-            placeholder="Your message..."
-            onChange={e => this.setState({ content: e.target.value })}
-          />
-          <input type="submit" className="btn btn-primary btn-block" id="send" value="Отправить" />
-        </form>
+        <Formik
+          initialValues={{ content: '' }}
+          validate={values => {
+            const errors = {};
+            if (!values.content) {
+              errors.content = 'Сообщение не может быть пустым';
+            }
+            return errors;
+          }}
+          onSubmit={(values, { resetForm }) => {
+            this.handleSend(values);
+            resetForm({ content: '' });
+          }}>
+          {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+            <form className={styles.fields} onSubmit={handleSubmit}>
+              {error ? <div className="alert alert-danger">{error}</div> : null}
+              {result ? <div className="alert alert-success">{result}</div> : null}
+              {errors.content && touched.content && (
+                <div style={{ color: 'red' }}>{errors.content}</div>
+              )}
+              <textarea
+                className="form-control mb-4"
+                id="content"
+                name="content"
+                rows="3"
+                placeholder="Your message..."
+                value={values.content}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <input
+                type="submit"
+                className="btn btn-primary btn-block"
+                id="send"
+                value="Отправить"
+              />
+            </form>
+          )}
+        </Formik>
       </>
     );
   }

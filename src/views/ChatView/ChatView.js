@@ -63,7 +63,7 @@ class ChatView extends React.Component {
   }
 
   render() {
-    const { serverMessages } = this.state;
+    const { messages } = this.state;
 
     return (
       <>
@@ -77,7 +77,7 @@ class ChatView extends React.Component {
             <Form postMessage={data => this.postMessage(data)} />
           </div>
           <div className={styles.messages} id="messages">
-            <MessagesList messages={serverMessages} />
+            <MessagesList messages={messages} />
           </div>
         </div>
       </>

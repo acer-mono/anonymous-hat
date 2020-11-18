@@ -7,7 +7,6 @@ class RegistrationView extends React.Component {
   constructor() {
     super();
     this.state = {
-      passwordConfirm: '',
       error: null,
       result: null,
     };
@@ -22,12 +21,12 @@ class RegistrationView extends React.Component {
   }
 
   render() {
-    const { passwordConfirm, error, result } = this.state;
+    const { error, result } = this.state;
 
     return (
       <div className={styles.main}>
         <Formik
-          initialValues={{ nickname: '', password: '' }}
+          initialValues={{ nickname: '', password: '', passwordConfirm: '' }}
           validate={values => {
             const errors = {};
             if (!values.nickname) {
@@ -38,6 +37,9 @@ class RegistrationView extends React.Component {
             }
             if (values.password.length < 7) {
               errors.password = 'Длина пароля должна быть больше 6 символов';
+            }
+            if (values.password !== values.passwordConfirm) {
+              errors.passwordConfirm = 'Введенные пароли не совпадают';
             }
             return errors;
           }}
@@ -74,14 +76,18 @@ class RegistrationView extends React.Component {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
+              {errors.passwordConfirm && touched.passwordConfirm && (
+                <div style={{ color: 'red' }}>{errors.passwordConfirm}</div>
+              )}
               <input
                 className="form-control mb-4"
                 type="password"
-                value={passwordConfirm}
-                id="password"
-                name="password"
+                id="passwordConfirm"
+                name="passwordConfirm"
                 placeholder="Confirm your password..."
-                onChange={e => this.setState({ passwordConfirm: e.target.value })}
+                value={values.passwordConfirm}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
               <input
                 type="submit"
