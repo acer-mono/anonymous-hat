@@ -1,94 +1,65 @@
-// TODO change host after pull (move to configs)
 import React from 'react';
+import 'core-js';
 import chat from './chat.svg';
 import styles from './styles.module.css';
 import Form from '../../components/Form';
 import MessagesList from '../../components/MessageList';
-const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-const xhr = new XMLHttpRequest();
-const Promise = require('es6-promise').Promise;
-const URL = 'http://localhost:3000/messages';
-/**
- * @param {string} method
- * @param {object} data
- * @returns {Promise<object>}
- */
-function http(method, data = null) {
-  return new Promise((resolve, reject) => {
-    let xhr = new XMLHttpRequest();
-    xhr.open(method, URL);
-    xhr.send(data ? JSON.stringify(data) : null);
-
-    xhr.onload = () => {
-      if (xhr.status !== 200) {
-        reject(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-      } else {
-        resolve(JSON.parse(xhr.response));
-      }
-    };
-
-    xhr.onerror = function () {
-      reject('Запрос не удался');
-    };
-  });
-}
+import apiService from '../../apiServices';
+import { Promise } from 'es6-promise';
 
 class ChatView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      serverMessages: [],
+      messages: [],
+      users: [],
     };
+
     this.timer = null;
   }
 
   componentDidMount() {
-    this.timer = setInterval(this.getMessagesAsync.bind(this), 1000);
+    this.setState({ users: [], messages: [] });
+    this.timer = setInterval(this.getMessages.bind(this), 1000);
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
   }
 
-  postMessagePromise() {
-    if (!this.user.value || !this.Message.value) {
-      console.error('Невозможно отправить сообщение! Пустые обязательные поля!');
-      return;
-    }
+  postMessage({ content }) {
+    apiService.message
+      .create({ content, chatId: this.props.match.params.id })
+      .then(() => this.getMessages());
+  }
 
-    http('POST', { nick: this.user.value, message: this.Message.value })
+  getMessages() {
+    apiService.message
+      .getMessages(this.props.match.params.id)
+      .then(response => response.data)
+      .then(messages => this.setState({ messages }))
+      .then(() => this.getUsers())
       .then(() => {
-        this.user.value = '';
-        this.Message.value = '';
-      })
-      .catch(() => {
-        this.messages.innerText = `Ошибка ${xhr.status}: ${xhr.statusText}`;
+        const newMessages = this.state.messages.map(message => {
+          const user = this.state.users.find(user => user.id === message.userId);
+          message.nickname = user.nickname;
+          return message;
+        });
+        this.setState({ messages: newMessages });
       });
   }
 
-  async postMessageAsync(newMessage) {
-    await http('POST', { user: newMessage.user, message: newMessage.message });
-  }
+  getUsers() {
+    const oldUsers = this.state.users;
+    const oldUsersIds = oldUsers.map(user => user.id);
+    const newUsersIds = [...new Set(this.state.messages.map(message => message.userId))];
+    const toLoad = newUsersIds.filter(id => !oldUsersIds.includes(id));
 
-  getMessagesPromise() {
-    http('GET')
-      .then(result => this.drawMessages(result))
-      .catch(error => console.log(error));
-  }
+    if (!toLoad.length) return;
 
-  async getMessagesAsync() {
-    try {
-      let result = await http('GET');
-      this.drawMessages(result);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  drawMessages(response) {
-    this.setState({
-      serverMessages: response,
-    });
+    return Promise.all(toLoad.map(id => apiService.user.getById(id)))
+      .then(responses => responses.map(response => response.data))
+      .then(newUsers => this.setState({ users: [...oldUsers, ...newUsers] }));
   }
 
   render() {
@@ -103,7 +74,7 @@ class ChatView extends React.Component {
         </div>
         <div className={styles.main}>
           <div className={styles.form}>
-            <Form postMessage={newMessage => this.postMessageAsync(newMessage)} />
+            <Form postMessage={data => this.postMessage(data)} />
           </div>
           <div className={styles.messages} id="messages">
             <MessagesList messages={serverMessages} />

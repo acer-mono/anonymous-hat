@@ -2,61 +2,36 @@ import React from 'react';
 import styles from './styles.modules.css';
 
 class Form extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      user: '',
-      messsage: '',
+      content: '',
     };
   }
 
-  handleSend() {
-    if (!this.state.user || !this.state.message) {
-      return;
-    }
-
-    try {
-      this.props.postMessage({
-        user: this.state.user,
-        message: this.state.message,
-      });
-
-      this.setState({ user: '', message: '' });
-    } catch (e) {
-      console.error(e);
-    }
+  handleSend(event) {
+    event.preventDefault();
+    this.props.postMessage({
+      content: this.state.content,
+    });
+    this.setState({ content: '' });
   }
 
   render() {
-    const { user, message } = this.state;
+    const { content } = this.state;
     return (
       <>
-        <form className={styles.fields} onSubmit={e => e.preventDefault()}>
-          <input
-            id="nick"
-            name="nick"
-            value={user}
-            className="form-control mb-4"
-            type="text"
-            placeholder="Your name..."
-            onChange={e => this.setState({ user: e.target.value })}
-          />
+        <form className={styles.fields} onSubmit={e => this.handleSend(e)}>
           <textarea
             className="form-control mb-4"
-            value={message}
+            value={content}
             id="message"
             name="message"
             rows="3"
             placeholder="Your message..."
-            onChange={e => this.setState({ message: e.target.value })}
+            onChange={e => this.setState({ content: e.target.value })}
           />
-          <input
-            type="submit"
-            className="btn btn-primary btn-block"
-            id="send"
-            value="Отправить"
-            onClick={() => this.handleSend()}
-          />
+          <input type="submit" className="btn btn-primary btn-block" id="send" value="Отправить" />
         </form>
       </>
     );
