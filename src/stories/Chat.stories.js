@@ -9,10 +9,38 @@ export default {
 
 const Template = args => <Chat {...args} />;
 
-export const Common = Template.bind({});
+const chat = {
+  id: '08215d6c1f5c2',
+  createdAt: '2020-11-19T03:27:30.735Z',
+  title: 'Chat',
+  userId: '71510b8acb82f',
+  participants: ['71510b8acb82f', '1'],
+  isPrivate: false,
+};
 
-Common.args = {
-  id: '123',
-  title: 'First Chat',
-  clickHandle: action('Chat clicked'),
+export const Owner = Template.bind({});
+Owner.args = {
+  userId: '71510b8acb82f',
+  chat,
+  goHandler: action('Go'),
+  joinHandler: action('Join'),
+  deleteHandler: action('Delete'),
+};
+
+export const Participant = Template.bind({});
+Participant.args = {
+  userId: '1',
+  chat,
+  goHandler: action('Go'),
+  joinHandler: action('Join'),
+  deleteHandler: action('Delete'),
+};
+
+export const Another = Template.bind({});
+Another.args = {
+  userId: '2',
+  chat,
+  goHandler: action('Go'),
+  joinHandler: action('Join'),
+  deleteHandler: action('Delete'),
 };

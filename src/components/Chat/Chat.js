@@ -6,9 +6,6 @@ import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import style from './styles.modules.css';
 
-/**
- * Компонент для отображения чата в списке чатов
- */
 class Chat extends React.Component {
   isOwner() {
     return this.props.userId === this.props.chat.userId;
@@ -39,12 +36,10 @@ class Chat extends React.Component {
       return (
         <>
           <div className={style.wrapper}>
-            <a className="badge badge-primary" href="/" onClick={e => this.innerClickHandle(e)}>
+            <a href="/" onClick={e => this.innerClickHandle(e)}>
               {this.props.chat.title}
             </a>
-            <button
-              className="btn btn-outline-warning"
-              onClick={() => this.props.goHandler(this.props.chat.id)}>
+            <button className="btn btn-outline-warning" onClick={() => console.log('Out of chat')}>
               <FontAwesomeIcon icon={faSignOutAlt} />
             </button>
           </div>
