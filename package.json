@@ -15,7 +15,8 @@
     "build-storybook": "build-storybook --no-dll",
     "loki:test": "npm run build-storybook && npx loki test --reactUri file:./storybook-static",
     "loki:update": "npm run build-storybook && npx loki update --reactUri file:./storybook-static",
-    "loki:approve": "npx loki approve"
+    "loki:approve": "npx loki approve",
+    "nightwatch": "nightwatch"
   },
   "jest": {
     "collectCoverage": true,
@@ -82,6 +83,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "chromedriver": "^85.0.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.2.1",
     "core-js": "^3.7.0",
@@ -105,6 +107,7 @@
     "jest": "^26.5.3",
     "lint-staged": "^10.4.2",
     "loki": "^0.25.1",
+    "nightwatch": "^1.5.1",
     "prettier": "^2.1.2",
     "prop-types": "^15.7.2",
     "react-is": "^17.0.1",

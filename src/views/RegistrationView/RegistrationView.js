@@ -24,16 +24,13 @@ class RegistrationView extends React.Component {
     const { error, result } = this.state;
 
     return (
-      <div className={styles.main}>
+      <div id="register-form" className={styles.main}>
         <Formik
           initialValues={{ nickname: '', password: '', passwordConfirm: '' }}
           validate={values => {
             const errors = {};
             if (!values.nickname) {
               errors.nickname = 'Введите никнейм';
-            }
-            if (!values.password) {
-              errors.password = 'Введите пароль';
             }
             if (values.password.length < 7) {
               errors.password = 'Длина пароля должна быть больше 6 символов';
@@ -52,7 +49,9 @@ class RegistrationView extends React.Component {
               {error ? <div className="alert alert-danger">{error}</div> : null}
               {result ? <div className="alert alert-success">{result}</div> : null}
               {errors.nickname && touched.nickname && (
-                <div style={{ color: 'red' }}>{errors.nickname}</div>
+                <div className="errorEmptyNickname" style={{ color: 'red' }}>
+                  {errors.nickname}
+                </div>
               )}
               <input
                 id="nick"
@@ -65,7 +64,9 @@ class RegistrationView extends React.Component {
                 onBlur={handleBlur}
               />
               {errors.password && touched.password && (
-                <div style={{ color: 'red' }}>{errors.password}</div>
+                <div className="errorShortPassword" style={{ color: 'red' }}>
+                  {errors.password}
+                </div>
               )}
               <input
                 className="form-control mb-4"
@@ -77,7 +78,9 @@ class RegistrationView extends React.Component {
                 onBlur={handleBlur}
               />
               {errors.passwordConfirm && touched.passwordConfirm && (
-                <div style={{ color: 'red' }}>{errors.passwordConfirm}</div>
+                <div className="errorPasswordConfirm" style={{ color: 'red' }}>
+                  {errors.passwordConfirm}
+                </div>
               )}
               <input
                 className="form-control mb-4"

@@ -6,3 +6,5 @@ build/
 coverage/
 .loki
 storybook-static/
+chromedriver.log
+tests_output/
