@@ -16,9 +16,19 @@ class LoginView extends React.Component {
   handleSend(values) {
     apiServices.auth
       .login(values)
-      .then(() => this.setState({ result: 'Пользователь успешно залогинился' }))
-      .then(() => setTimeout(() => this.props.history.push('/profile'), 2000))
+      .then(() => {
+        this.setState({ result: 'Пользователь успешно залогинился' });
+        setTimeout(() => this.props.history.push('/profile'), 2000);
+        setTimeout(() => this.redirectAfterLogin(), 2000);
+      })
       .catch(error => this.setState({ error: `ERROR: ${error.response.data.error}` }));
+  }
+
+  redirectAfterLogin() {
+    const redirectUrl = this.props.location?.state.from.pathname
+      ? this.props.location.state.from.pathname
+      : '/profile';
+    this.props.updateAuthHandler().then(() => this.props.history.push(redirectUrl));
   }
 
   render() {

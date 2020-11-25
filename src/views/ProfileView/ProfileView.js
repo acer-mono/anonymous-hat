@@ -17,13 +17,7 @@ export default class ProfileView extends React.Component {
   }
 
   componentDidMount() {
-    apiServices.user
-      .getCurrent()
-      .then(response => response.data)
-      .then(user => this.setState({ user }))
-      .then(() => apiServices.chat.getMyChats(this.state.user.id))
-      .then(response => response.data)
-      .then(chats => this.setState({ chats }));
+    this.getChatList();
   }
 
   handleChatCreate({ title }) {
@@ -32,7 +26,7 @@ export default class ProfileView extends React.Component {
 
   getChatList() {
     apiServices.chat
-      .getMyChats(this.state.user.id)
+      .getMyChats(this.props.user.id)
       .then(response => response.data)
       .then(chats => this.setState({ chats }));
   }
@@ -65,9 +59,10 @@ export default class ProfileView extends React.Component {
   }
 
   render() {
+    const { user } = this.props;
     return (
       <>
-        {this.state.user && (
+        {user && (
           <>
             <div className={style.wrapper}>
               <div className={style.profile}>
@@ -75,10 +70,8 @@ export default class ProfileView extends React.Component {
                   <div className={style.personalInfo}>
                     <img src={placeholder} className={style.avatar} alt="" />
                     <div>
-                      <h3 className="card-title">{this.state.user.nickname}</h3>
-                      <h5 className="card-text">
-                        {new Date(this.state.user.createdAt).toLocaleString()}
-                      </h5>
+                      <h3 className="card-title">{user.nickname}</h3>
+                      <h5 className="card-text">{new Date(user.createdAt).toLocaleString()}</h5>
                     </div>
                   </div>
                   <div className="mt-2 mb-1">
@@ -89,7 +82,7 @@ export default class ProfileView extends React.Component {
                     <>
                       <h5 className="text-center">Мои чаты</h5>
                       <ChatList
-                        userId={this.state.user?.id}
+                        userId={user.id}
                         list={this.state.chats}
                         goHandler={id => this.goHandler(id)}
                         joinHandler={id => this.joinHandler(id)}
@@ -105,7 +98,7 @@ export default class ProfileView extends React.Component {
                     <>
                       <h5 className="text-center">Результаты поиска</h5>
                       <ChatList
-                        userId={this.state.user?.id}
+                        userId={user.id}
                         list={this.state.foundChats}
                         goHandler={id => this.goHandler(id)}
                         joinHandler={id => this.joinHandler(id)}
