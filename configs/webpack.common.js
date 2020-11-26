@@ -2,6 +2,7 @@ const paths = require('./paths');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   entry: [paths.src + '/index.js'],
@@ -59,4 +60,9 @@ module.exports = {
       xmlhttprequest: '{XMLHttpRequest:XMLHttpRequest}',
     },
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    },
+  },
 };

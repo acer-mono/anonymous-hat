@@ -1,8 +1,8 @@
 import React from 'react';
-import ChatForm from '../../components/ChatForm';
-import apiServices from '../../apiServices';
-import ChatList from '../../components/ChatList';
-import SearchChatForm from '../../components/SearchChatForm';
+import ChatForm from '@/components/ChatForm';
+import apiServices from '@/apiServices';
+import ChatList from '@/components/ChatList';
+import SearchChatForm from '@/components/SearchChatForm';
 import style from './styles.module.css';
 import placeholder from './placeholder.png';
 

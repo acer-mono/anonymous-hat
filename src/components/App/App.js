@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, Switch, Route, Redirect } from 'react-router-dom';
-import LoginView from '../../views/LoginView';
-import RegistrationView from '../../views/RegistrationView';
-import ChatView from '../../views/ChatView';
-import ProfileView from '../../views/ProfileView';
-import apiService from '../../apiServices';
+import LoginView from '@/views/LoginView';
+import RegistrationView from '@/views/RegistrationView';
+import ChatView from '@/views/ChatView';
+import ProfileView from '@/views/ProfileView';
+import apiService from '@/apiServices';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

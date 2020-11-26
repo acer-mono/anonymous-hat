@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.modules.css';
-import apiServices from '../../apiServices';
+import apiServices from '@/apiServices';
 import { Formik } from 'formik';
 
 class LoginView extends React.Component {

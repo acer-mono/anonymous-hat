@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.modules.css';
 import { Formik } from 'formik';
-import apiServices from '../../apiServices';
+import apiServices from '@/apiServices';
 
 class RegistrationView extends React.Component {
   constructor() {

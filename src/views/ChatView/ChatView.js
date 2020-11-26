@@ -2,9 +2,9 @@ import React from 'react';
 import 'core-js';
 import chat from './chat.svg';
 import styles from './styles.module.css';
-import Form from '../../components/Form';
-import MessagesList from '../../components/MessageList';
-import apiService from '../../apiServices';
+import Form from '@/components/Form';
+import MessagesList from '@/components/MessageList';
+import apiService from '@/apiServices';
 import { Promise } from 'es6-promise';
 
 class ChatView extends React.Component {
