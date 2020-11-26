@@ -2,7 +2,6 @@ import React from 'react';
 import ChatForm from '@/components/ChatForm';
 import apiServices from '@/apiServices';
 import ChatList from '@/components/ChatList';
-import SearchChatForm from '@/components/SearchChatForm';
 import style from './styles.module.css';
 import placeholder from './placeholder.png';
 
@@ -12,7 +11,6 @@ export default class ProfileView extends React.Component {
     this.state = {
       user: null,
       chats: [],
-      foundChats: [],
     };
   }
 
@@ -20,8 +18,8 @@ export default class ProfileView extends React.Component {
     this.getChatList();
   }
 
-  handleChatCreate({ title }) {
-    apiServices.chat.create({ title }).then(() => this.getChatList());
+  handleChatCreate(params) {
+    apiServices.chat.create(params).then(() => this.getChatList());
   }
 
   getChatList() {
@@ -47,14 +45,6 @@ export default class ProfileView extends React.Component {
     apiServices.chat
       .delete(id)
       .then(() => this.getChatList())
-      .then(() => this.state.foundChats.filter(x => this.state.chats.includes(x)))
-      .then(foundChats => this.setState({ foundChats }));
-  }
-
-  handleChatSearch({ title }) {
-    apiServices.chat
-      .search(title)
-      .then(response => response.data)
       .then(foundChats => this.setState({ foundChats }));
   }
 
@@ -84,22 +74,6 @@ export default class ProfileView extends React.Component {
                       <ChatList
                         userId={user.id}
                         list={this.state.chats}
-                        goHandler={id => this.goHandler(id)}
-                        joinHandler={id => this.joinHandler(id)}
-                        deleteHandler={id => this.deleteHandler(id)}
-                      />
-                    </>
-                  )}
-                  <div className="mt-2 mb-1">
-                    <h5>Поиск чата</h5>
-                    <SearchChatForm handleSubmit={data => this.handleChatSearch(data)} />
-                  </div>
-                  {this.state.foundChats.length !== 0 && (
-                    <>
-                      <h5 className="text-center">Результаты поиска</h5>
-                      <ChatList
-                        userId={user.id}
-                        list={this.state.foundChats}
                         goHandler={id => this.goHandler(id)}
                         joinHandler={id => this.joinHandler(id)}
                         deleteHandler={id => this.deleteHandler(id)}

@@ -1,0 +1,20 @@
+.search {
+    width: 50%;
+    overflow: auto;
+    height: 90vh;
+    opacity: .95;
+    background: white;
+    border-radius: .5rem;
+    padding: 2rem;
+}
+
+.li-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}

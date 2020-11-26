@@ -15,9 +15,10 @@ export default {
     create: ({ nickname, password }) => axiosInstance.post('/user', { nickname, password }),
     getCurrent: () => axiosInstance.get('/user'),
     getById: id => axiosInstance.get(`/user/${id}`),
+    find: nickname => axiosInstance.get(`/user/?nickname=${nickname}`),
   },
   chat: {
-    create: ({ title }) => axiosInstance.post('/chat', { title }),
+    create: params => axiosInstance.post('/chat', params),
     getMyChats: userId => axiosInstance.get(`/chat/?participantId=${userId}`),
     search: title => axiosInstance.get(`/chat/?title=${title}`),
     getInfo: id => axiosInstance.get(`/chat/${id}`),

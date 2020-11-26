@@ -7,6 +7,8 @@ import ProfileView from '@/views/ProfileView';
 import apiService from '@/apiServices';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ChatSearchView from '@/views/ChatSearchView/ChatSerachView';
+import UserSearchView from '@/views/UserSearchView';
 
 class PrivateRoute extends React.Component {
   render() {
@@ -71,6 +73,8 @@ class App extends React.Component {
         {user ? (
           <>
             <Link to="/profile">Мой профиль</Link>&nbsp;
+            <Link to="/chatSearch">Поиск чатов</Link>&nbsp;
+            <Link to="/userSearch">Поиск пользователей</Link>&nbsp;
             <button className="btn btn-primary" onClick={() => this.logoutHandler()}>
               <FontAwesomeIcon icon={faSignOutAlt} />
             </button>
@@ -94,6 +98,18 @@ class App extends React.Component {
             path="/profile"
             user={user}
             component={ProfileView}
+            componentProps={{ user }}
+          />
+          <PrivateRoute
+            path="/chatSearch"
+            user={user}
+            component={ChatSearchView}
+            componentProps={{ user }}
+          />
+          <PrivateRoute
+            path="/userSearch"
+            user={user}
+            component={UserSearchView}
             componentProps={{ user }}
           />
           <Redirect exact from="/" to="/profile" />

@@ -6,6 +6,7 @@ class ChatForm extends React.Component {
     super(props);
     this.state = {
       title: '',
+      isPrivate: false,
       error: '',
     };
   }
@@ -27,18 +28,30 @@ class ChatForm extends React.Component {
     event.preventDefault();
 
     if (this.validate()) {
-      this.props.handleSubmit({ title: this.state.title });
-      this.setState({ title: '' });
+      this.props.handleSubmit({ title: this.state.title, isPrivate: this.state.isPrivate });
+      this.setState({ title: '', isPrivate: false });
     }
   }
 
   render() {
-    const { title, error } = this.state;
+    const { title, isPrivate, error } = this.state;
 
     return (
       <>
         <div>{error && <span style={{ color: 'red' }}>{error}</span>}</div>
         <form onSubmit={e => this.handleSubmit(e)}>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              checked={isPrivate}
+              onChange={event => this.setState({ isPrivate: event.target.checked })}
+              id="isPrivate"
+            />
+            <label className="form-check-label" htmlFor="isPrivate">
+              Секретный
+            </label>
+          </div>
           <div className="input-group md-form form-sm form-1 pl-0">
             <div className="input-group-prepend">
               <button className="btn btn-outline-success" type="submit">
