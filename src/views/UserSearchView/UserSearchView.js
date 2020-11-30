@@ -1,8 +1,7 @@
 import React from 'react';
 import apiServices from '@/apiServices';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import styles from './styles.module.css';
+import UserList from '@/components/UserList';
 
 export default class UserSearchView extends React.Component {
   constructor(props) {
@@ -76,22 +75,8 @@ export default class UserSearchView extends React.Component {
                   />
                 </div>
               </form>
-              <ul className="list-group">
-                {foundUsers.map(user => (
-                  <div key={user.id} className="list-group-item">
-                    <div className={styles['li-wrapper']}>
-                      <span>{user.nickname}</span>
-                      {user.id !== this.props.user.id && (
-                        <button
-                          className="btn btn-outline-success"
-                          onClick={() => this.handleStartDialogue(user.id)}>
-                          <FontAwesomeIcon icon={faPlus} />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </ul>
+
+              <UserList handleClick={id => this.handleStartDialogue(id)} list={foundUsers} />
             </div>
           </div>
         </div>
