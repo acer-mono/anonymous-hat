@@ -1,7 +1,10 @@
 import React from 'react';
 import apiServices from '@/apiServices';
-import styles from './styles.module.css';
+import styles from '@/views/UserSearchView/styles.module.css';
 import UserList from '@/components/UserList';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
 
 export default class UserSearchView extends React.Component {
   constructor(props) {
@@ -59,23 +62,21 @@ export default class UserSearchView extends React.Component {
               <h4 className="text-center">Поиск пользователей</h4>
               <div>{error && <span style={{ color: 'red' }}>{error}</span>}</div>
               <form className="mb-2" onSubmit={e => this.handleSubmit(e)}>
-                <div className="input-group md-form form-sm form-1 pl-0">
-                  <div className="input-group-prepend">
-                    <button className="btn btn-outline-success" type="submit">
+                <InputGroup className="form-sm form-1 pl-0">
+                  <InputGroup.Prepend>
+                    <Button variant="outline-success" type="submit">
                       Search
-                    </button>
-                  </div>
-                  <input
-                    className="form-control"
+                    </Button>
+                  </InputGroup.Prepend>
+                  <FormControl
                     type="text"
                     placeholder="Enter chat name..."
                     aria-label="Create"
                     value={nickname}
                     onChange={event => this.setState({ nickname: event.target.value })}
                   />
-                </div>
+                </InputGroup>
               </form>
-
               <UserList handleClick={id => this.handleStartDialogue(id)} list={foundUsers} />
             </div>
           </div>

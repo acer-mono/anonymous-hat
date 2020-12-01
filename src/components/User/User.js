@@ -2,20 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import styles from './styles.module.css';
+import styles from '@/components/User/styles.module.css';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
 
 export default class User extends React.Component {
   render() {
     const { id, nickname, handleClick } = this.props;
     return (
-      <div key={id} className="list-group-item">
-        <div className={styles['li-wrapper']}>
-          <span>{nickname}</span>
-          <button className="btn btn-outline-success" onClick={() => handleClick(id)}>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-      </div>
+      <ListGroup.Item className={styles['li-wrapper']} key={id}>
+        <span>{nickname}</span>
+        <Button variant="outline-success" onClick={() => handleClick(id)}>
+          <FontAwesomeIcon icon={faPlus} />
+        </Button>
+      </ListGroup.Item>
     );
   }
 }

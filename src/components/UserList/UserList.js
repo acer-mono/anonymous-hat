@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import User from '@/components/User';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 export default class UserList extends React.Component {
   render() {
     const { list, handleClick } = this.props;
     return (
-      <ul className="list-group">
+      <ListGroup>
         {list.map(user => (
           <User id={user.id} nickname={user.nickname} key={user.id} handleClick={handleClick} />
         ))}
-      </ul>
+      </ListGroup>
     );
   }
 }
