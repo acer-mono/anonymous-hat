@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Message from './Message';
 import renderer from 'react-test-renderer';
 
@@ -8,10 +8,11 @@ describe('Message', () => {
     const nick = 'test';
     const message = 'test';
 
-    const component = shallow(<Message user={nick} message={message} />);
+    const component = mount(<Message user={nick} message={message} />);
     expect(component.text()).toContain(nick);
     expect(component.text()).toContain(message);
   });
+
   test('Message test with snapshot', () => {
     const user = 'test';
     const message = 'test';

@@ -1,14 +1,14 @@
 import { shallow } from 'enzyme/build';
-import MessagesList from './MessagesList';
+import MessagesList from '@/components/MessageList';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
 describe('MessagesList', () => {
   test('add 3 elements', () => {
     const messages = [
-      { user: 'first', message: 'firstMessage' },
-      { user: 'second', message: 'secondMessage' },
-      { user: 'second', message: 'secondMessage' },
+      { nickname: 'first', content: 'firstMessage', id: 1 },
+      { nickname: 'second', content: 'secondMessage', id: 2 },
+      { nickname: 'second', content: 'secondMessage', id: 3 },
     ];
     const component = shallow(<MessagesList messages={messages} />);
     expect(component.find('Message')).toHaveLength(3);
@@ -29,9 +29,9 @@ describe('MessagesList', () => {
 
   test('MessageList test with snapshot (message list with 3 messages)', () => {
     const messages = [
-      { user: 'first', message: 'firstMessage' },
-      { user: 'second', message: 'secondMessage' },
-      { user: 'second', message: 'secondMessage' },
+      { nickname: 'first', content: 'firstMessage', id: 1 },
+      { nickname: 'second', content: 'secondMessage', id: 2 },
+      { nickname: 'second', content: 'secondMessage', id: 3 },
     ];
     const component = renderer.create(<MessagesList messages={messages} />);
     let componentSnapshot = component.toJSON();

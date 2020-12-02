@@ -6,7 +6,6 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: null,
       error: null,
     };
   }
@@ -18,7 +17,7 @@ class Form extends React.Component {
   }
 
   render() {
-    const { error, result } = this.state;
+    const { error } = this.state;
     return (
       <>
         <Formik
@@ -37,7 +36,6 @@ class Form extends React.Component {
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
             <form className={styles.fields} onSubmit={handleSubmit}>
               {error ? <div className="alert alert-danger">{error}</div> : null}
-              {result ? <div className="alert alert-success">{result}</div> : null}
               {errors.content && touched.content && (
                 <div style={{ color: 'red' }}>{errors.content}</div>
               )}

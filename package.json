@@ -19,6 +19,9 @@
     "nightwatch": "nightwatch"
   },
   "jest": {
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
     "collectCoverage": true,
     "coverageReporters": [
       "html"
@@ -76,6 +79,7 @@
     "@storybook/addon-links": "^6.0.28",
     "@storybook/preset-create-react-app": "^3.1.4",
     "@storybook/react": "^6.0.28",
+    "@testing-library/react": "^11.2.2",
     "axios": "^0.21.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
@@ -114,6 +118,7 @@
     "react-is": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-test-renderer": "^16.14.0",
+    "react-testing-library": "^8.0.1",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.3",
     "style-loader": "^2.0.0",
