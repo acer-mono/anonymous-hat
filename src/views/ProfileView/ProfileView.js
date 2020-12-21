@@ -7,6 +7,7 @@ import placeholder from './placeholder.png';
 import { faPen, faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import apiService from '@/apiServices';
+import UserEditView from '@/views/UserEditView';
 
 export default class ProfileView extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ export default class ProfileView extends React.Component {
     this.state = {
       user: null,
       chats: [],
-      isDialog: false,
+      isOpenCreateChatDialog: false,
+      isOpenChangeUserPassword: false,
     };
   }
 
@@ -26,7 +28,7 @@ export default class ProfileView extends React.Component {
     apiServices.chat
       .create(params)
       .then(() => this.getChatList())
-      .then(() => this.setState({ isDialog: false }));
+      .then(() => this.setState({ isOpenCreateChatDialog: false }));
   }
 
   getChatList() {
@@ -60,7 +62,7 @@ export default class ProfileView extends React.Component {
 
   render() {
     const { user } = this.props;
-    const { isDialog } = this.state;
+    const { isOpenCreateChatDialog, isOpenChangeUserPassword } = this.state;
     return (
       <>
         {user && (
@@ -75,7 +77,7 @@ export default class ProfileView extends React.Component {
                       <h5 className="card-text">{new Date(user.createdAt).toLocaleString()}</h5>
                       <button
                         className="btn btn-outline-dark"
-                        onClick={() => console.log('Редактировать профиль')}>
+                        onClick={() => this.setState({ isOpenChangeUserPassword: true })}>
                         <FontAwesomeIcon icon={faPen} />
                       </button>
                       <button className="btn btn-primary" onClick={() => this.logoutHandler()}>
@@ -83,17 +85,35 @@ export default class ProfileView extends React.Component {
                       </button>
                     </div>
                   </div>
-                  {isDialog && (
+                  {isOpenCreateChatDialog && (
                     <>
                       <div className={style.createChatBackground} />
                       <div className={style.createChat}>
                         <a
                           className={style.close}
-                          onClick={() => this.setState({ isDialog: false })}
+                          onClick={() => this.setState({ isOpenCreateChatDialog: false })}
                         />
                         <div className="mt-2 mb-1">
                           <h5>Создание чата</h5>
-                          <ChatForm handleSubmit={data => this.handleChatCreate(data)} />
+                          <ChatForm />
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {isOpenChangeUserPassword && (
+                    <>
+                      <div className={style.createChatBackground} />
+                      <div className={style.createChat}>
+                        <a
+                          className={style.close}
+                          onClick={() => this.setState({ isOpenChangeUserPassword: false })}
+                        />
+                        <div className="mt-2 mb-1">
+                          <h5>Изменение пароля</h5>
+                          <UserEditView
+                            user={user}
+                            updateHandler={password => this.changePassword(password)}
+                          />
                         </div>
                       </div>
                     </>
@@ -104,7 +124,7 @@ export default class ProfileView extends React.Component {
                         <span>Мои чаты</span>
                         <button
                           className="btn btn-outline-success"
-                          onClick={() => this.setState({ isDialog: true })}>
+                          onClick={() => this.setState({ isOpenCreateChatDialog: true })}>
                           <FontAwesomeIcon icon={faPlus} />
                         </button>
                       </h5>

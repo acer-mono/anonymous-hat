@@ -22,6 +22,7 @@ export default {
     getCurrent: () => axiosInstance.get('/user'),
     getById: id => axiosInstance.get(`/user/${id}`),
     find: nickname => axiosInstance.get(`/user/?nickname=${nickname}`),
+    edit: password => axiosInstance.put('/user', { password }),
   },
   chat: {
     create: params => axiosInstance.post('/chat', params),
