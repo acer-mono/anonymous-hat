@@ -6,8 +6,16 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import style from './styles.modules.css';
+import ChatEditView from '@/views/ChatEditView';
 
 class Chat extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpenDialog: false,
+    };
+  }
+
   isOwner() {
     return this.props.userId === this.props.chat.userId;
   }
@@ -17,6 +25,7 @@ class Chat extends React.Component {
   }
 
   renderChat() {
+    const { isOpenDialog } = this.state;
     if (this.isOwner()) {
       return (
         <>
@@ -25,7 +34,9 @@ class Chat extends React.Component {
               {this.props.chat.title}
             </a>
             <div>
-              <button className="btn btn-outline-dark" onClick={() => console.log('edit')}>
+              <button
+                className="btn btn-outline-dark"
+                onClick={() => this.setState({ isOpenDialog: true })}>
                 <FontAwesomeIcon icon={faPen} />
               </button>
               <button
@@ -35,6 +46,18 @@ class Chat extends React.Component {
               </button>
             </div>
           </div>
+          {isOpenDialog && (
+            <>
+              <div className={style.createChatBackground} />
+              <div className={style.createChat}>
+                <a className={style.close} onClick={() => this.setState({ isOpenDialog: false })} />
+                <div className="mt-2 mb-1">
+                  <h5>Изменить название</h5>
+                  <ChatEditView chat={this.props.chat} />
+                </div>
+              </div>
+            </>
+          )}
         </>
       );
     }

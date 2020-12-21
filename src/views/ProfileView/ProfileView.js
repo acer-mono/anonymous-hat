@@ -95,7 +95,7 @@ export default class ProfileView extends React.Component {
                         />
                         <div className="mt-2 mb-1">
                           <h5>Создание чата</h5>
-                          <ChatForm />
+                          <ChatForm handleSubmit={data => this.handleChatCreate(data)} />
                         </div>
                       </div>
                     </>

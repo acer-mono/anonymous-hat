@@ -31,6 +31,7 @@ export default {
     getInfo: id => axiosInstance.get(`/chat/${id}`),
     delete: id => axiosInstance.delete(`/chat/${id}`),
     join: chatId => axiosInstance.put(`/chat/${chatId}`),
+    edit: chat => axiosInstance.put(`/chat/${chat.id}`, { chat }),
   },
   message: {
     create: ({ content, chatId }) => axiosInstance.post('/message', { content, chatId }),

@@ -8,7 +8,6 @@ class UserEditView extends React.Component {
     this.state = {
       error: null,
       result: null,
-      isDialogOpen: this.props.isDialogOpen,
     };
   }
 
