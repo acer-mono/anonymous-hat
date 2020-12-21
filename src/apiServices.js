@@ -1,9 +1,15 @@
 import axios from 'axios';
 
+export const URL = 'localhost:3001';
+const PROTOCOL = 'http';
+
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: `${PROTOCOL}://${URL}`,
   withCredentials: true,
 });
+
+const jsonInterceptor = [response => response.data, error => Promise.reject(error)];
+axiosInstance.interceptors.response.use(...jsonInterceptor);
 
 export default {
   auth: {

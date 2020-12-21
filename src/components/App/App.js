@@ -1,24 +1,23 @@
 import React from 'react';
-import { Link, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import LoginView from '@/views/LoginView';
 import RegistrationView from '@/views/RegistrationView';
 import ChatView from '@/views/ChatView';
 import ProfileView from '@/views/ProfileView';
 import apiService from '@/apiServices';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ChatSearchView from '@/views/ChatSearchView/ChatSerachView';
 import UserSearchView from '@/views/UserSearchView';
+import ViewHeader from '@/views/ViewHeader';
 
 class PrivateRoute extends React.Component {
   render() {
-    const { user, component: Component, componentProps, ...rest } = this.props;
+    const { user, children, ...rest } = this.props;
     return (
       <Route
         {...rest}
         render={routeProps =>
           user ? (
-            <Component {...componentProps} {...routeProps} />
+            React.cloneElement(children, { ...routeProps, user })
           ) : (
             <Redirect
               to={{
@@ -50,15 +49,8 @@ class App extends React.Component {
   updateAuthState() {
     return apiService.user
       .getCurrent()
-      .then(response => response.data)
       .then(user => this.setState({ user, initDone: true }))
       .catch(() => this.setState({ user: null, initDone: true }));
-  }
-
-  logoutHandler() {
-    apiService.auth.logout().then(() => {
-      this.setState({ user: null });
-    });
   }
 
   render() {
@@ -70,48 +62,43 @@ class App extends React.Component {
 
     return (
       <>
-        {user ? (
-          <>
-            <Link to="/profile">Мой профиль</Link>&nbsp;
-            <Link to="/chatSearch">Поиск чатов</Link>&nbsp;
-            <Link to="/userSearch">Поиск пользователей</Link>&nbsp;
-            <button className="btn btn-primary" onClick={() => this.logoutHandler()}>
-              <FontAwesomeIcon icon={faSignOutAlt} />
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/login">Логин</Link>&nbsp;
-            <Link to="/registration">Регистрация</Link>&nbsp;
-          </>
-        )}
         <Switch>
           <Route
             path="/login"
             render={routeProps => (
-              <LoginView updateAuthHandler={this.updateAuthState} {...routeProps} />
+              <ViewHeader title="Авторизация">
+                <LoginView updateAuthHandler={this.updateAuthState} {...routeProps} />
+              </ViewHeader>
             )}
           />
-          <Route path="/registration" component={RegistrationView} />
-          <PrivateRoute path="/chat/:id" user={user} component={ChatView} />
-          <PrivateRoute
-            path="/profile"
-            user={user}
-            component={ProfileView}
-            componentProps={{ user }}
+          <Route
+            path="/registration"
+            render={routeProps => (
+              <ViewHeader title="Регистрация">
+                <RegistrationView {...routeProps} />
+              </ViewHeader>
+            )}
           />
-          <PrivateRoute
-            path="/chatSearch"
-            user={user}
-            component={ChatSearchView}
-            componentProps={{ user }}
-          />
-          <PrivateRoute
-            path="/userSearch"
-            user={user}
-            component={UserSearchView}
-            componentProps={{ user }}
-          />
+          <PrivateRoute path="/chat/:id" user={user}>
+            <ViewHeader title="Чат">
+              <ChatView />
+            </ViewHeader>
+          </PrivateRoute>
+          <PrivateRoute path="/profile" user={user}>
+            <ViewHeader title="Профиль пользователя">
+              <ProfileView />
+            </ViewHeader>
+          </PrivateRoute>
+          <PrivateRoute path="/chatSearch" user={user}>
+            <ViewHeader title="Поиск чатов">
+              <ChatSearchView />
+            </ViewHeader>
+          </PrivateRoute>
+          <PrivateRoute path="/userSearch" user={user}>
+            <ViewHeader title="Поиск пользователей">
+              <UserSearchView />
+            </ViewHeader>
+          </PrivateRoute>
           <Redirect exact from="/" to="/profile" />
         </Switch>
       </>

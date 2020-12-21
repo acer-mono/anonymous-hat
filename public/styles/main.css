@@ -1,5 +1,6 @@
 body {
     background: url("../images/pattern.jpg");
+    padding-top: 100px;
 }
 
 .error-content {

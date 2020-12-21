@@ -4,6 +4,9 @@ import apiServices from '@/apiServices';
 import ChatList from '@/components/ChatList';
 import style from './styles.module.css';
 import placeholder from './placeholder.png';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import apiService from '@/apiServices';
 
 export default class ProfileView extends React.Component {
   constructor(props) {
@@ -48,6 +51,17 @@ export default class ProfileView extends React.Component {
       .then(foundChats => this.setState({ foundChats }));
   }
 
+  logoutHandler() {
+    apiService.auth
+      .logout()
+      .then(() => {
+        this.setState({ user: null });
+      })
+      .then(() => {
+        this.props.history.push('/');
+      });
+  }
+
   render() {
     const { user } = this.props;
     return (
@@ -62,6 +76,9 @@ export default class ProfileView extends React.Component {
                     <div>
                       <h3 className="card-title">{user.nickname}</h3>
                       <h5 className="card-text">{new Date(user.createdAt).toLocaleString()}</h5>
+                      <button className="btn btn-primary" onClick={() => this.logoutHandler()}>
+                        <FontAwesomeIcon icon={faSignOutAlt} />
+                      </button>
                     </div>
                   </div>
                   <div className="mt-2 mb-1">
