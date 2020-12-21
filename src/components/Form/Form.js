@@ -10,6 +10,10 @@ class Form extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.input.focus();
+  }
+
   handleSend(values) {
     this.props.postMessage({
       content: values.content,
@@ -48,6 +52,7 @@ class Form extends React.Component {
                 value={values.content}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                ref={el => (this.input = el)}
               />
               <input
                 type="submit"

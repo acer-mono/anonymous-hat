@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import style from './styles.modules.css';
@@ -23,11 +24,16 @@ class Chat extends React.Component {
             <a href="/" onClick={e => this.innerClickHandle(e)}>
               {this.props.chat.title}
             </a>
-            <button
-              className="btn btn-outline-danger"
-              onClick={() => this.props.deleteHandler(this.props.chat.id)}>
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
+            <div>
+              <button className="btn btn-outline-dark" onClick={() => console.log('edit')}>
+                <FontAwesomeIcon icon={faPen} />
+              </button>
+              <button
+                className="btn btn-outline-danger"
+                onClick={() => this.props.deleteHandler(this.props.chat.id)}>
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </div>
           </div>
         </>
       );

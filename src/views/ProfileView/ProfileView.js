@@ -4,7 +4,7 @@ import apiServices from '@/apiServices';
 import ChatList from '@/components/ChatList';
 import style from './styles.module.css';
 import placeholder from './placeholder.png';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import apiService from '@/apiServices';
 
@@ -14,6 +14,7 @@ export default class ProfileView extends React.Component {
     this.state = {
       user: null,
       chats: [],
+      isDialog: false,
     };
   }
 
@@ -22,7 +23,10 @@ export default class ProfileView extends React.Component {
   }
 
   handleChatCreate(params) {
-    apiServices.chat.create(params).then(() => this.getChatList());
+    apiServices.chat
+      .create(params)
+      .then(() => this.getChatList())
+      .then(() => this.setState({ isDialog: false }));
   }
 
   getChatList() {
@@ -56,6 +60,7 @@ export default class ProfileView extends React.Component {
 
   render() {
     const { user } = this.props;
+    const { isDialog } = this.state;
     return (
       <>
         {user && (
@@ -68,18 +73,41 @@ export default class ProfileView extends React.Component {
                     <div>
                       <h3 className="card-title">{user.nickname}</h3>
                       <h5 className="card-text">{new Date(user.createdAt).toLocaleString()}</h5>
+                      <button
+                        className="btn btn-outline-dark"
+                        onClick={() => console.log('Редактировать профиль')}>
+                        <FontAwesomeIcon icon={faPen} />
+                      </button>
                       <button className="btn btn-primary" onClick={() => this.logoutHandler()}>
                         <FontAwesomeIcon icon={faSignOutAlt} />
                       </button>
                     </div>
                   </div>
-                  <div className="mt-2 mb-1">
-                    <h5>Создание чата</h5>
-                    <ChatForm handleSubmit={data => this.handleChatCreate(data)} />
-                  </div>
+                  {isDialog && (
+                    <>
+                      <div className={style.createChatBackground} />
+                      <div className={style.createChat}>
+                        <a
+                          className={style.close}
+                          onClick={() => this.setState({ isDialog: false })}
+                        />
+                        <div className="mt-2 mb-1">
+                          <h5>Создание чата</h5>
+                          <ChatForm handleSubmit={data => this.handleChatCreate(data)} />
+                        </div>
+                      </div>
+                    </>
+                  )}
                   {this.state.chats.length !== 0 && (
                     <>
-                      <h5 className="text-center">Мои чаты</h5>
+                      <h5 className="text-center">
+                        <span>Мои чаты</span>
+                        <button
+                          className="btn btn-outline-success"
+                          onClick={() => this.setState({ isDialog: true })}>
+                          <FontAwesomeIcon icon={faPlus} />
+                        </button>
+                      </h5>
                       <ChatList
                         userId={user.id}
                         list={this.state.chats}
