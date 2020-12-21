@@ -13,19 +13,13 @@ export default class ChatSearchView extends React.Component {
     };
   }
 
-  handleChatSearch({ title }) {
-    this.setState({ title });
-    apiServices.chat
-      .search(title)
-      .then(response => response.data)
-      .then(foundChats => this.setState({ foundChats }));
+  getChatList() {
+    apiServices.chat.search(this.state.title).then(foundChats => this.setState({ foundChats }));
   }
 
-  getChatList() {
-    apiServices.chat
-      .search(this.state.title)
-      .then(response => response.data)
-      .then(foundChats => this.setState({ foundChats }));
+  handleChatSearch({ title }) {
+    this.setState({ title });
+    apiServices.chat.search(title).then(foundChats => this.setState({ foundChats }));
   }
 
   goHandler(id) {
@@ -41,10 +35,7 @@ export default class ChatSearchView extends React.Component {
   deleteHandler(id) {
     if (!confirm('Вы действительно хотите удалить этот чат?')) return;
 
-    apiServices.chat
-      .delete(id)
-      .then(() => this.getChatList())
-      .then(foundChats => this.setState({ foundChats }));
+    apiServices.chat.delete(id).then(() => this.getChatList());
   }
 
   render() {

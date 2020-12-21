@@ -35,21 +35,28 @@ export default class UserSearchView extends React.Component {
     if (this.validate()) {
       apiServices.user
         .find(this.state.nickname)
-        .then(response => response.data)
         .then(foundUsers => this.setState({ foundUsers, nickname: '' }))
-        .catch(error => this.setState({ error: error.response.data.error }));
+        .catch(error => this.setState({ error: 'Ошибка: ' + error.response.data.error }));
     }
   }
 
   handleStartDialogue(userId) {
+    const redirectToChat = chatId => {
+      this.props.history.push(`/chat/${chatId}`);
+    };
+
     apiServices.chat
       .create({
         isDialogue: true,
         participants: [userId],
       })
-      .then(response => response.data)
-      .then(chat => this.props.history.push(`/chat/${chat.id}`));
-    console.log(userId);
+      .then(chat => redirectToChat(chat.id))
+      .catch(error => {
+        if (error.response.status === 303) {
+          return error.response.data;
+        }
+      })
+      .then(chat => (chat ? redirectToChat(chat.id) : null));
   }
 
   render() {

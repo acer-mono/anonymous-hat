@@ -5,7 +5,6 @@ import styles from './styles.module.css';
 import Form from '@/components/Form';
 import MessagesList from '@/components/MessageList';
 import apiService from '@/apiServices';
-import { Promise } from 'es6-promise';
 
 class ChatView extends React.Component {
   constructor(props) {
@@ -20,7 +19,9 @@ class ChatView extends React.Component {
 
   componentDidMount() {
     this.setState({ users: [], messages: [] });
-    this.timer = setInterval(this.getMessages.bind(this), 1000);
+    this.timer = setInterval(async () => {
+      await this.getMessages();
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -28,38 +29,49 @@ class ChatView extends React.Component {
   }
 
   postMessage({ content }) {
-    apiService.message
-      .create({ content, chatId: this.props.match.params.id })
-      .then(() => this.getMessages());
+    apiService.message.create({ content, chatId: this.props.match.params.id }).then(async () => {
+      await this.getMessages();
+    });
   }
 
-  getMessages() {
-    apiService.message
-      .getMessages(this.props.match.params.id)
-      .then(response => response.data)
-      .then(messages => this.setState({ messages }))
-      .then(() => this.getUsers())
-      .then(() => {
-        const newMessages = this.state.messages.map(message => {
-          const user = this.state.users.find(user => user.id === message.userId);
-          message.nickname = user.nickname;
-          return message;
-        });
-        this.setState({ messages: newMessages });
-      });
+  async getMessages() {
+    function getMessageIds(messages) {
+      return messages.map(message => message.id);
+    }
+    function getOnlyNewMessages(serverMessages, stateMessages) {
+      const serverIds = getMessageIds(serverMessages);
+      const stateIds = getMessageIds(stateMessages);
+      const newIds = serverIds.filter(id => !stateIds.includes(id));
+      return serverMessages.filter(message => newIds.includes(message.id));
+    }
+
+    const serverMessages = await apiService.message.getMessages(this.props.match.params.id);
+    let newMessages = getOnlyNewMessages(serverMessages, this.state.messages);
+    await this.addNicknamesToMessages(newMessages);
   }
 
-  getUsers() {
+  async addNicknamesToMessages(newMessages) {
+    await this.getUsers(newMessages);
+    newMessages = newMessages.map(message => {
+      const user = this.state.users.find(user => user.id === message.userId);
+      message.nickname = user.nickname;
+      return message;
+    });
+    this.setState({ messages: [...this.state.messages, ...newMessages] });
+  }
+
+  async getUsers(newMessages) {
     const oldUsers = this.state.users;
     const oldUsersIds = oldUsers.map(user => user.id);
-    const newUsersIds = [...new Set(this.state.messages.map(message => message.userId))];
+    const newUsersIds = [...new Set(newMessages.map(message => message.userId))];
     const toLoad = newUsersIds.filter(id => !oldUsersIds.includes(id));
-
     if (!toLoad.length) return;
-
-    return Promise.all(toLoad.map(id => apiService.user.getById(id)))
-      .then(responses => responses.map(response => response.data))
-      .then(newUsers => this.setState({ users: [...oldUsers, ...newUsers] }));
+    const newUsers = [];
+    for (let id of toLoad) {
+      const user = await apiService.user.getById(id);
+      newUsers.push(user);
+    }
+    this.setState({ users: [...oldUsers, ...newUsers] });
   }
 
   render() {

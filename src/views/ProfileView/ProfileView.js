@@ -26,10 +26,7 @@ export default class ProfileView extends React.Component {
   }
 
   getChatList() {
-    apiServices.chat
-      .getMyChats(this.props.user.id)
-      .then(response => response.data)
-      .then(chats => this.setState({ chats }));
+    apiService.chat.getMyChats(this.props.user.id).then(chats => this.setState({ chats }));
   }
 
   goHandler(id) {
@@ -45,10 +42,7 @@ export default class ProfileView extends React.Component {
   deleteHandler(id) {
     if (!confirm('Вы действительно хотите удалить этот чат?')) return;
 
-    apiServices.chat
-      .delete(id)
-      .then(() => this.getChatList())
-      .then(foundChats => this.setState({ foundChats }));
+    apiService.chat.delete(id).then(() => this.getChatList());
   }
 
   logoutHandler() {
@@ -57,9 +51,7 @@ export default class ProfileView extends React.Component {
       .then(() => {
         this.setState({ user: null });
       })
-      .then(() => {
-        this.props.history.push('/');
-      });
+      .then(() => this.props.history.push('/login'));
   }
 
   render() {
