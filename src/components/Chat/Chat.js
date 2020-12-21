@@ -39,7 +39,9 @@ class Chat extends React.Component {
             <a href="/" onClick={e => this.innerClickHandle(e)}>
               {this.props.chat.title}
             </a>
-            <button className="btn btn-outline-warning" onClick={() => console.log('Out of chat')}>
+            <button
+              className="btn btn-outline-warning"
+              onClick={() => this.props.deleteHandler(this.props.chat.id)}>
               <FontAwesomeIcon icon={faSignOutAlt} />
             </button>
           </div>
