@@ -50,10 +50,10 @@ export default class ProfileView extends React.Component {
     apiService.chat.delete(id).then(() => this.getChatList());
   }
 
-  leaveHandler() {
+  leaveHandler(id) {
     if (!confirm('Вы действительно хотите покинуть этот чат?')) return;
 
-    //apiService.chat.delete(chat.id).then(() => this.getChatList());
+    apiService.chat.delete(id).then(() => this.getChatList());
   }
 
   logoutHandler() {
@@ -118,7 +118,7 @@ export default class ProfileView extends React.Component {
                       </div>
                     </>
                   )}
-                  {this.state.chats.length !== 0 && (
+                  {this.state.chats.length !== 0 ? (
                     <>
                       <h5 className="text-center">
                         <span>Мои чаты</span>
@@ -134,9 +134,18 @@ export default class ProfileView extends React.Component {
                         goHandler={id => this.goHandler(id)}
                         joinHandler={id => this.joinHandler(id)}
                         deleteHandler={id => this.deleteHandler(id)}
-                        leaveHandler={chat => this.leaveHandler(chat)}
+                        leaveHandler={id => this.leaveHandler(id)}
                       />
                     </>
+                  ) : (
+                    <h5 className="text-center">
+                      <span>Список чатов пуст</span>
+                      <button
+                        className="btn btn-outline-success"
+                        onClick={() => this.setState({ isOpenCreateChatDialog: true })}>
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </h5>
                   )}
                 </div>
               </div>
