@@ -20,8 +20,8 @@ class ChatView extends React.Component {
 
   async componentDidMount() {
     this.setState({ users: [], messages: [] });
-    this.firstTime = true;
     await this.getMessages();
+    this.scroll();
   }
 
   componentWillUnmount() {
@@ -48,12 +48,9 @@ class ChatView extends React.Component {
     const serverMessages = await apiService.message.getMessages(this.props.match.params.id);
     let newMessages = getOnlyNewMessages(serverMessages, this.state.messages);
     await this.addNicknamesToMessages(newMessages);
-    if (this.firstTime) {
-      this.scroll();
-    }
     this.timer = setTimeout(async () => {
       await this.getMessages();
-      this.firstTime = false;
+      this.scroll();
     }, 1000);
   }
 
