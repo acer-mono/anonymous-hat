@@ -2,24 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chat from '../Chat';
 
-class ChatList extends React.Component {
-  render() {
-    return (
-      <div className="list-group">
-        {this.props.list.map(chat => (
-          <Chat
-            userId={this.props.userId}
-            chat={chat}
-            goHandler={this.props.goHandler}
-            joinHandler={this.props.joinHandler}
-            deleteHandler={this.props.deleteHandler}
-            leaveHandler={this.props.leaveHandler}
-            key={chat.id}
-          />
-        ))}
-      </div>
-    );
-  }
+function ChatList({ userId, list, goHandler, joinHandler, deleteHandler, leaveHandler }) {
+  return (
+    <div className="list-group">
+      {list.map(chat => (
+        <Chat
+          userId={userId}
+          chat={chat}
+          goHandler={goHandler}
+          joinHandler={joinHandler}
+          deleteHandler={deleteHandler}
+          leaveHandler={leaveHandler}
+          key={chat.id}
+        />
+      ))}
+    </div>
+  );
 }
 
 ChatList.propTypes = {
