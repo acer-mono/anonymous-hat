@@ -13,6 +13,7 @@ class ChatList extends React.Component {
             goHandler={this.props.goHandler}
             joinHandler={this.props.joinHandler}
             deleteHandler={this.props.deleteHandler}
+            leaveHandler={this.props.leaveHandler}
             key={chat.id}
           />
         ))}
@@ -33,6 +34,7 @@ ChatList.propTypes = {
   goHandler: PropTypes.func,
   joinHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
+  leaveHandler: PropTypes.func,
 };
 
 export default ChatList;

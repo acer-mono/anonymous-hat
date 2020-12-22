@@ -13,7 +13,6 @@ export default class ProfileView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
       chats: [],
       isOpenCreateChatDialog: false,
       isOpenChangeUserPassword: false,
@@ -51,13 +50,14 @@ export default class ProfileView extends React.Component {
     apiService.chat.delete(id).then(() => this.getChatList());
   }
 
+  leaveHandler() {
+    if (!confirm('Вы действительно хотите покинуть этот чат?')) return;
+
+    //apiService.chat.delete(chat.id).then(() => this.getChatList());
+  }
+
   logoutHandler() {
-    apiService.auth
-      .logout()
-      .then(() => {
-        this.setState({ user: null });
-      })
-      .then(() => this.props.history.push('/login'));
+    apiService.auth.logout().then(() => this.props.history.push('/login'));
   }
 
   render() {
@@ -134,6 +134,7 @@ export default class ProfileView extends React.Component {
                         goHandler={id => this.goHandler(id)}
                         joinHandler={id => this.joinHandler(id)}
                         deleteHandler={id => this.deleteHandler(id)}
+                        leaveHandler={chat => this.leaveHandler(chat)}
                       />
                     </>
                   )}

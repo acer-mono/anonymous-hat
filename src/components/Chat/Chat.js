@@ -70,7 +70,7 @@ class Chat extends React.Component {
             </a>
             <button
               className="btn btn-outline-warning"
-              onClick={() => this.props.deleteHandler(this.props.chat.id)}>
+              onClick={() => this.props.leaveHandler(this.props.chat)}>
               <FontAwesomeIcon icon={faSignOutAlt} />
             </button>
           </div>
