@@ -29,7 +29,7 @@ export default class ChatEditView extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let chat = this.props.chat;
+    const chat = this.props.chat;
     chat.title = this.state.title;
     if (this.validate()) {
       apiServices.chat
