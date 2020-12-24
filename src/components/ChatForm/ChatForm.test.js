@@ -7,7 +7,6 @@ describe('ChatForm', () => {
   test('runs callback with proper value', () => {
     const mock = jest.fn();
     const component = mount(<ChatForm handleSubmit={mock} />);
-    const spy = jest.spyOn(ChatForm.prototype, 'validate');
     const searchText = component.find('input[type="text"]');
     const value = 'Create';
     searchText.simulate('change', {
@@ -17,14 +16,12 @@ describe('ChatForm', () => {
     const input = component.find('button[type="submit"]').first();
     input.simulate('submit');
 
-    expect(spy).toHaveReturnedWith(true);
     expect(mock).toHaveBeenCalledTimes(1);
   });
 
   test('runs callback with empty create field', () => {
     const mock = jest.fn();
     const component = mount(<ChatForm handleSubmit={mock} />);
-    const spy = jest.spyOn(ChatForm.prototype, 'validate');
     const searchText = component.find('input[type="text"]');
     const value = '';
     searchText.simulate('change', {
@@ -34,7 +31,6 @@ describe('ChatForm', () => {
     const input = component.find('button[type="submit"]').first();
     input.simulate('submit');
 
-    expect(spy).toHaveReturnedWith(false);
     expect(mock).toHaveBeenCalledTimes(0);
   });
 

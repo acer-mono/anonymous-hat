@@ -6,6 +6,7 @@ import Chat from './Chat';
 const deleteHandler = jest.fn();
 const goHandler = jest.fn();
 const joinHandler = jest.fn();
+const leaveHandler = jest.fn();
 const user = { owner: '1', participant: '2', another: '3' };
 const chat = {
   id: '08215d6c1f5c2',
@@ -25,17 +26,15 @@ describe('Chat', () => {
         goHandler={goHandler}
         joinHandler={joinHandler}
         deleteHandler={deleteHandler}
+        leaveHandler={leaveHandler}
         key={chat.id}
       />,
     );
 
-    const input = component.find('button').first();
-    const link = component.find('a').first();
+    const input = component.find('#delete').first();
     input.simulate('click');
-    link.simulate('click');
     expect(component.text()).toContain(chat.title);
     expect(deleteHandler).toHaveBeenCalled();
-    expect(goHandler).toHaveBeenCalled();
   });
 
   test('Chat view for participant', () => {
@@ -46,17 +45,15 @@ describe('Chat', () => {
         goHandler={goHandler}
         joinHandler={joinHandler}
         deleteHandler={deleteHandler}
+        leaveHandler={leaveHandler}
         key={chat.id}
       />,
     );
 
     const input = component.find('button').first();
-    const link = component.find('a').first();
     input.simulate('click');
-    link.simulate('click');
     expect(component.text()).toContain(chat.title);
-    //expect(outHandler).toHaveBeenCalled();
-    expect(goHandler).toHaveBeenCalled();
+    expect(leaveHandler).toHaveBeenCalled();
   });
 
   test('Chat view for another user', () => {
@@ -67,6 +64,7 @@ describe('Chat', () => {
         goHandler={goHandler}
         joinHandler={joinHandler}
         deleteHandler={deleteHandler}
+        leaveHandler={leaveHandler}
         key={chat.id}
       />,
     );

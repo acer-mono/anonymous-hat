@@ -40,6 +40,7 @@ class Chat extends React.Component {
                 <FontAwesomeIcon icon={faPen} />
               </button>
               <button
+                id="delete"
                 className="btn btn-outline-danger"
                 onClick={() => this.props.deleteHandler(this.props.chat.id)}>
                 <FontAwesomeIcon icon={faTrash} />
